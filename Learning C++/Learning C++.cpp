@@ -307,17 +307,34 @@ int main()
     {
     case 1:
         std::cout << "one";
-        return;
+        break;
     case 2:
         std::cout << "two";
-        return;
+        break;
     case 3:
         std::cout << "three";
-        return;
+        break;
     default:
         std::cout << "unknown";
-        return;
+        break;
     }
+
+    // y here is an L value, which is an identifiable object that has a longer lifetime
+    // 3 * 4 + 3 is an R value, which means it is short lived and is not identifiable past execution
+    // The R value gets stored into the L value here
+    int y{ 3 * 4 + 3 };
+
+    // This DOES NOT refer to an address of operator
+    // This refers to a lvalue reference, which means that this variable acts as a reference to another lvalue
+    int& ref_y{ y };
+
+    std::cout << y << '\n';
+    std::cout << ref_y << '\n';
+
+    ref_y = ref_y * 2;
+
+    std::cout << y << '\n';
+    std::cout << ref_y << '\n';
 
     return 0;
     // Your main function should always return 0 if it ran normally

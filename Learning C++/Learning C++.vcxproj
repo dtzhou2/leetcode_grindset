@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Add.cpp" />
+    <ClCompile Include="chapter9.cpp" />
     <ClCompile Include="double.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="height.cpp" />
