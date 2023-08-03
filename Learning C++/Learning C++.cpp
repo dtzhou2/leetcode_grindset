@@ -307,16 +307,16 @@ int main()
     {
     case 1:
         std::cout << "one";
-        return;
+        break;
     case 2:
         std::cout << "two";
-        return;
+        break;
     case 3:
         std::cout << "three";
-        return;
+        break;
     default:
         std::cout << "unknown";
-        return;
+        break;
     }
 
     return 0;
