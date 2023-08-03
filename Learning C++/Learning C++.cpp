@@ -16,6 +16,7 @@
 #include "globals2.h"
 #include "constants.h"
 #include "passfail.h"
+#include "chapter9.h"
 
 //using namespace std;
 // This is a VERY VERY discouraged practice
@@ -306,35 +307,99 @@ int main()
     switch (x)
     {
     case 1:
-        std::cout << "one";
+        std::cout << "one" << '\n';
         break;
     case 2:
-        std::cout << "two";
+        std::cout << "two" << '\n';
         break;
     case 3:
-        std::cout << "three";
+        std::cout << "three" << '\n';
         break;
     default:
-        std::cout << "unknown";
+        std::cout << "unknown" << '\n';
         break;
     }
 
     // y here is an L value, which is an identifiable object that has a longer lifetime
     // 3 * 4 + 3 is an R value, which means it is short lived and is not identifiable past execution
     // The R value gets stored into the L value here
-    int y{ 3 * 4 + 3 };
+    auto y{ 3 * 4 + 3 };
 
     // This DOES NOT refer to an address of operator
     // This refers to a lvalue reference, which means that this variable acts as a reference to another lvalue
-    int& ref_y{ y };
+    auto& ref_y{ y };
 
-    std::cout << y << '\n';
-    std::cout << ref_y << '\n';
+    std::cout << "The value of Y is: " << y << '\n';
+    std::cout << "The value of ref_Y is: " << ref_y << '\n';
 
+    // When you modify the value of a reference you indirectly modify the value of the referent
     ref_y = ref_y * 2;
 
-    std::cout << y << '\n';
-    std::cout << ref_y << '\n';
+    std::cout << "The value of Y is: " << y << '\n';
+    std::cout << "The value of ref_Y is: " << ref_y << '\n';
+
+    // You CANNOT change the variable that a reference is pointed to
+    // If you try to like here, you will actually modifiy the value of the referent
+    ref_y = x;
+
+    std::cout << "The value of Y is: " << y << '\n';
+    std::cout << "The value of ref_Y is: " << ref_y << '\n';
+
+    {
+        auto& ref_z = x;
+        std::cout << "The value of ref_Z is: " << ref_z << '\n';
+    }
+    
+    // The referent (LValue that reference is pointing to) does not care if / when the reference gets destroyed
+    std::cout << "The value of Y is: " << y << '\n';
+    // On the other hand, if the referent is destroyed, the value of the reference is now undefined.
+
+    const auto ab{ 7 };
+    const auto& ab_ref = ab;
+
+    std::cout << "The value of ab is " << ab << '\n'; 
+    std::cout << "The value of ab_ref is " << ab_ref << '\n';
+
+    std::cout << "The value of x is " << x << '\n';
+    // The function passed by reference changes the value of X 
+    addOne(x);
+    std::cout << "The value of x is " << x << '\n';
+    // However, when you dont pass the function by reference, the value of x remains unchanged
+    // Reference does not make a copy of the variable, rather just passing an alias to that variable
+    addTwo(x);
+    std::cout << "The value of x is " << x << '\n';
+
+    // Here the & operator DOES NOT create a reference. Instead it returns the memory address for y
+    std::cout << "The memory address of y is " << &y << '\n';
+
+    // This is a POINTER which is DIFFERENT from a reference. This POINTER gives the direct memory address for the variable Y
+    // ALWAYS intialize your pointers
+    auto* address_y{ &y };
+
+    // In this case the * operator returns the value at the memory address given by the pointer
+    std::cout << "The value contained @ memory address of y is " << *address_y << '\n';
+
+    // By modifying a dereferenced pointer, we are changing the value at that address, so in essence, changing Y
+    *address_y = 6;
+    std::cout << "The value contained @ memory address of y is " << *address_y << '\n';
+
+    // If you are creating an empty pointer make sure it is created as a null pointer so you dont create undefined behavior 
+    int* null_ptr{ null_ptr };
+
+    if (null_ptr == nullptr) 
+        std::cout << "This pointer is null \n";
+    
+    // Alternative test for null ptr, null will automatically convert to false
+    if (!null_ptr)
+        std::cout << "This pointer is also null \n";
+
+    const auto value = 10;
+    // To create a pointer that points to a const value, put the const before the type
+    const auto* ptr{ &value };
+    // To create a pointer with a fixed address, put the const value after the type
+    auto* const ptr{ &value };
+
+
 
     return 0;
     // Your main function should always return 0 if it ran normally

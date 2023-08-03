@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add.h" />
+    <ClInclude Include="chapter9.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="double.h" />
     <ClInclude Include="globals.h" />
