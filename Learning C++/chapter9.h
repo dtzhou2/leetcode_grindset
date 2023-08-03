@@ -6,4 +6,6 @@ void addOne(int& x);
 
 void addTwo(int x);
 
+void nullify(char*& ptr);
+
 #endif	

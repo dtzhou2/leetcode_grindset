@@ -56,7 +56,7 @@ int main()
     //// int e, f, g;
     //// Dont do this it confuses the hell out of everyone and u can confuse yourself
     //std::cout << b << "+" << c << "+" << d << "\n";
-    //// Prefer ‘\n’ over std::endl when outputting text to the console.
+    //// Prefer ï¿½\nï¿½ over std::endl when outputting text to the console.
     //// More efficient since it doesnt force buffer flush
     //a = 5; //  Assignment
     //[[maybe_unused]] int i; // Unintialized 
@@ -397,13 +397,43 @@ int main()
     // To create a pointer that points to a const value, put the const before the type
     const auto* ptr{ &value };
     // To create a pointer with a fixed address, put the const value after the type
-    auto* const ptr{ &value };
+    auto* const ptr_2{ &value };
 
-
+    auto val_2 = 'a';
+    auto* ptr_3 { &val_2  };
+    
+    std::cout << "The memory address of ptr is: " << (ptr_3 ? "non-null\n" : "null\n") << "\n";
+    std::cout << "The memory address of ptr is: " << (ptr_3 ? "non-null\n" : "null\n") << "\n";hhbh 
+    nullify(ptr_3);
 
     return 0;
     // Your main function should always return 0 if it ran normally
 
+}
+
+void sort (int& first, int& second){
+    if(second>=first)
+        return;
+    auto temp {first};
+    first = second;
+    second = temp;
+}
+
+// When you pass a function by reference, it will pass an alias of the function, letting you change the variable
+void addOne(int& x) {
+	x += 1; 
+	std::cout << x << "\n";
+}
+
+// When you dont pass a function by reference, it will make a copy of the variable
+void addTwo(int x) {
+	x += 2;
+	std::cout << x << "\n";
+}
+
+// You can also pass a pointer by reference allowing you to change the value of the pointer
+void nullify(char*& ptr) {
+	ptr = nullptr;
 }
 
 int staticFunctionTest()
