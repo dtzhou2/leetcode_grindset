@@ -6,8 +6,7 @@
 // This causes the pre-processor to include the entire contents of the iostream pre-processed file 
 // Angled brackets in this case signifies to the pre-processor that the header file was not written by us
 // Causing it to first pull from the system include directories
-#include "add.h"
-// This inclusion means that the linker will pull in all the function prototypes / declerations from add.h
+// // This inclusion means that the linker will pull in all the function prototypes / declerations from add.h
 // This means we dont have to constantly retype function declarations, relying on the header files instead 
 #include "io.h"
 #include "double.h"
@@ -16,6 +15,7 @@
 #include "globals2.h"
 #include "constants.h"
 #include "passfail.h"
+#include "chapter_8.cpp"
 
 //using namespace std;
 // This is a VERY VERY discouraged practice
@@ -29,6 +29,17 @@ int doubleNum(int input);
 int getInteger();
 void printSV(std::string_view s);
 int staticFunctionTest();
+int add(int a, int b);
+double add(double a, double b);
+//typedef long Miles; 
+// C style type alias, that binds the type miles to the actual type long
+// Not used anymore because it is easy to forget whether the type or the alias comes first
+// Additionally very unclear syntactically
+using Miles = long;
+using Radians = double;
+using Degrees = double;
+// This is the new C++ way to do aliasing
+// Very clear which type you are aliasing and what the alias name is
 // All these function prototypes exist in the global namespace
 // Function prototypes tells the program about the existence of a function before actually defining it
 
@@ -307,27 +318,70 @@ int main()
     {
     case 1:
         std::cout << "one";
-        return;
+        break;
     case 2:
         std::cout << "two";
-        return;
+        break;
     case 3:
         std::cout << "three";
-        return;
+        break;
     default:
         std::cout << "unknown";
-        return;
+        break;
     }
+
+    // CHAPTER 8 STUFF BELOW THIS POINT
+
+    char c{ 'a' };
+    std::string a{ "Hello" };
+    std::cout << c << ' ' << static_cast<int>(c) << '\n'; // Preferred method for casting between basic types in C++
+    // This cast is very simple and not powerful in order to prevent it from doing indadvertent things to const/types/variables
+    // Static Cast also has compile time checking, making it hard to make inadvertent errors
+    // std::cout << a << ' ' << static_cast<int>(a) << '\n';
+    // This is an illegal cast, so code will not compile and compiler will notify you that you have made illegal cast
+
+    [[maybe_unused]] auto d{ 4.5 };
+    // Auto will automatically deduce a variables type given an intializer, e.g this will intialize a as a double
+    [[maybe_unused]] auto e{ 4 };
+    // Auto will automatically intitalize b as an int
+    // Use auto to define variables since it is easier and simpler than explcitly defining a type
+
+    std::cout << add(1, 2);
+    std::cout << add(1.2, 3.4);
+
+    std::cout << "Enter a number of degrees: ";
+    Degrees degrees{};
+    std::cin >> degrees;
+
+    Radians radians{ convertToRadians(degrees) };
+    std::cout << degrees << " degrees is " << radians << " radians.\n";
+
+    // This will explicitly generate a template with type double
+    min<double>(3.0, 4.0);
+
+
 
     return 0;
     // Your main function should always return 0 if it ran normally
 
 }
 
+Radians convertToRadians(Degrees degrees)
+{
+    return degrees * 3.1415 / 180;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+double add(double a, double b) {
+    return a + b;
+}
+
 int staticFunctionTest()
 {
-    int a{ 0 };
-    static int b{ 0 };
+    auto a{ 0 };
+    static auto b{ 0 };
 
     ++a;
     ++b;
@@ -374,6 +428,8 @@ int doubleNum(int input) {
     return input * 2;
     // Returns the double of the input number 
 }
+// You would think that having two functions with the same name would cause problems
+// However this is not the case because c++ can differentiate that the two functions have different parameter types and treat them seperately
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
