@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <array>
 // This causes the pre-processor to include the entire contents of the iostream pre-processed file 
 // Angled brackets in this case signifies to the pre-processor that the header file was not written by us
 // Causing it to first pull from the system include directories
@@ -18,6 +19,7 @@
 #include "passfail.h"
 #include "chapter_10.h"
 #include "enums.h"
+#include "chapter_11.h"
 
 //using namespace std;
 // This is a VERY VERY discouraged practice
@@ -369,6 +371,8 @@ int main()
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
 
+    int length = 10;
+
     // Create a dynamic array by modifying the new call with one for arrays
     auto* array{ new int[length] {} };
     // Since dynamic arrays pull from heap they can be much larger than fixed arrays
@@ -457,6 +461,27 @@ int main()
     for (int count{ 0 }; count < 10; ++count) {
         ptr_array[count] = new int[5];
     }
+
+    // std::array is the new c++ structure aimed at solving some of the problems with other types of arrays
+    // The length of the array must be a fixed runtime constant unlike dynamically allocated arrays 
+    std::array<int, 5> arr5{ 1,2,3,4,5 };
+    // In c++ 17 and onwards you can omit the type and length and create the array like so - easier and recommended
+    std::array arr6{ 5,6,7,8,9 };
+
+    std::cout << arr5[2] << '\n';
+    // std::array supports the default way to intialize arrays, using the [] operator
+    // This operator has NO bounds checking
+    arr5[2] = 4;
+    std::cout << arr5[2] << '\n';
+    
+    // std::array also supports this way to access arrays, using the .at()
+    // This operator HAS bounds checking but is slower
+    std::cout << arr6[2] << '\n';
+    arr6.at(2) = 4;
+    std::cout << arr6[2] << '\n';
+
+    // std::array supports the .size() operator to get the size of the array
+    std::cout << arr6.size() << '\n';
 
     return 0;
     // Your main function should always return 0 if it ran normally
