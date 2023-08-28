@@ -369,6 +369,74 @@ int main()
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
 
+    // Create a dynamic array by modifying the new call with one for arrays
+    auto* array{ new int[length] {} };
+    // Since dynamic arrays pull from heap they can be much larger than fixed arrays
+    // EG Array below will cause seg fault since not enough memory in stack
+    // int array_fixed[10000000000]{};
+    // C++ 11 and up allows you to use intializer lists to allocate dynamic arrays
+    auto* array5{ new int[5] { 0, 1, 2, 3, 4} };
+
+    array[0] = 5;
+    // The delete[] keyword NOT delete deallocates arrays
+    delete[] array;
+    array = nullptr;
+
+    std::cout << "How many names would you like to enter: ";
+    std::size_t name_len;
+    std::cin >> name_len;
+
+    auto* array2{ new std::string[name_len]{} };
+    for (int i{}; i < name_len; ++i) {
+        std::cout << "Enter name " << i + 1 << " : ";
+        std::getline(std::cin >> std::ws, array2[i]);
+    }
+
+    constexpr int fibonacci[]{ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 };
+    // For each loop will access each array element
+    // For each iteration, number is set to the value of the array element for the current loop iteration
+    // For each loop is ideal situation to use auto const
+    for (auto number : fibonacci) {
+        std::cout << number << ' ';
+    }
+
+    std::cout << '\n';
+
+    std::string array7[]{ "peter", "likes", "frozen", "yogurt" };
+    // If you do this, it will copy each element in array7 into the elemtn variable
+    // This is expensive and will eat up memory space
+    for (auto element : array7)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << '\n';
+
+    // Instead of doing this the expensive way, we can simply for each loop using a reference
+    // This means that each element variables only copys the address of the array variable
+    // This also allows you to change the array by dereferencing element 
+    for (auto& element : array7)
+    {
+        std::cout << element << ' ';
+    }
+
+    std::cout << '\n';
+
+    // If you want to avoid accidentely modifying the array make your for each loop const
+    for (const auto& element : array7)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << '\n';
+
+    constexpr int scores[]{ 84, 92, 76, 81, 56 };
+
+
+    // The intial I used here is to set an iterator which keeps tack of our indices (C++ 20 ONLY)
+    for (int i{ 0 }; auto score : scores)
+    {
+
+    }
+
     return 0;
     // Your main function should always return 0 if it ran normally
 
