@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <array>
+#include <vector>
 // This causes the pre-processor to include the entire contents of the iostream pre-processed file 
 // Angled brackets in this case signifies to the pre-processor that the header file was not written by us
 // Causing it to first pull from the system include directories
@@ -318,7 +319,7 @@ int main()
     std::cout << "User #5: " << (passOrFail() ? "Pass\n" : "Fail\n");
 
     int x{ 3 };
-    
+
     switch (x)
     {
     case 1:
@@ -336,15 +337,15 @@ int main()
     }
 
     // Here is how to use the enumerated type 
-    Color apple { red };
-    Color shirt { green };
+    [[maybe_unused]] Color apple{ red };
+    [[maybe_unused]] Color shirt{ green };
     // This errors because white was not defined in the enumerated type
     // Color paper { white }; 
 
-    Monster::MonsterType monster { Monster::troll };
-    Monster::MonsterType monster1 { Monster::orc };
+    Monster::MonsterType monster{ Monster::troll };
+    Monster::MonsterType monster1{ Monster::orc };
 
-    if(monster == monster1)
+    if (monster == monster1)
         std::cout << "A troll is the same as an orc \n";
     else
         std::cout << "A troll is not the same as an orc \n";
@@ -357,16 +358,16 @@ int main()
     // One way we can get around this is to do an explicit conversion using a static cast
     int input{};
     std::cin >> input;
-    Color paint1 = static_cast <Color>(input);
+    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    Color paint2 {2};
+    [[maybe_unused]]Color paint2{ 2 };
 
     // The using enum keyword will import the entire enumeration into the current scope
     // using enum Fruits;
 
-    Animal dora { Animal::goat };
-    Animal sarah { Animal::pig };
+    [[maybe_unused]] Animal dora { Animal::goat };
+    [[maybe_unused]] Animal sarah { Animal::pig };
 
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
@@ -379,7 +380,7 @@ int main()
     // EG Array below will cause seg fault since not enough memory in stack
     // int array_fixed[10000000000]{};
     // C++ 11 and up allows you to use intializer lists to allocate dynamic arrays
-    auto* array5{ new int[5] { 0, 1, 2, 3, 4} };
+    [[maybe_unused]] auto* array5{ new int[5] { 0, 1, 2, 3, 4} };
 
     array[0] = 5;
     // The delete[] keyword NOT delete deallocates arrays
@@ -432,14 +433,14 @@ int main()
     }
     std::cout << '\n';
 
-    constexpr int scores[]{ 84, 92, 76, 81, 56 };
+    //[[maybe_unused]] constexpr int scores[]{ 84, 92, 76, 81, 56 };
 
 
-    // The intial I used here is to set an iterator which keeps tack of our indices (C++ 20 ONLY)
-    for (int i{ 0 }; auto score : scores)
-    {
+    //// The intial I used here is to set an iterator which keeps tack of our indices (C++ 20 ONLY)
+    //for (int i{ 0 }; auto score : scores)
+    //{
 
-    }
+    //}
 
     // This is a variable with value 5
     int var{ 5 };
@@ -464,9 +465,9 @@ int main()
 
     // std::array is the new c++ structure aimed at solving some of the problems with other types of arrays
     // The length of the array must be a fixed runtime constant unlike dynamically allocated arrays 
-    std::array<int, 5> arr5{ 1,2,3,4,5 };
+    [[maybe_unused]] std::array<int, 5> arr5{ 1,2,3,4,5 };
     // In c++ 17 and onwards you can omit the type and length and create the array like so - easier and recommended
-    std::array arr6{ 5,6,7,8,9 };
+    [[maybe_unused]] std::array arr6{ 5,6,7,8,9 };
 
     std::cout << arr5[2] << '\n';
     // std::array supports the default way to intialize arrays, using the [] operator
@@ -482,6 +483,20 @@ int main()
 
     // std::array supports the .size() operator to get the size of the array
     std::cout << arr6.size() << '\n';
+
+    // std::vector is the drop in replacement for old dynamic arrays
+    std::vector v1{ 1,2,3,4,5 };
+    // You can call the size function of vectors just like you can for std::array
+    std::cout << "The size of the vector is: " << v1.size() << '\n';
+    // You can change the size of the array very easily by calling v1.resize
+    // This will automatically clean up after itself preventing memory leaks
+    // You can also use resize to make the vector smaller
+    v1.resize(6);
+    
+    // Here we intialize a vector using parenthesis intialization, by just specifying the number of elements
+    // This is cheaper than resizing and is preferred if you want to 0 intialize
+    std::vector<int> v2(3);
+    
 
     return 0;
     // Your main function should always return 0 if it ran normally

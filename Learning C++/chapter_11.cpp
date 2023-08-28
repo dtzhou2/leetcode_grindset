@@ -3,6 +3,7 @@
 #include <iostream> 
 #include <array>
 #include <iostream>
+#include <vector>
 
 // ALWAYS pass std::array's by reference
 // Far too expensive to copy otherwise
@@ -13,7 +14,7 @@ void array_reference_test(std::array<T, size>& arr) {
 	
 	// This is one way of iterating through elements in an std::array
 	// We greatly prefer this way because it is much cleaner
-	for (int element : arr)
+	for (T element : arr)
 		std::cout << element << '\n';
 	
 	// This is another, NOTE THAT the iterator HAS TO be of the size_t type
@@ -22,7 +23,16 @@ void array_reference_test(std::array<T, size>& arr) {
 	// size_t is unsigned while int is unsigned
 	// Therefore comparing size_t and int will break things
 	for (std::size_t i{ 0 }; i < arr.size(); ++i) {
+		std::cout << arr[i] << '\n';
+	}
+
+}
+
+template <typename T>
+std::vector<T> vector_test(std::vector<T> arr) {
+	for (T element : arr) {
 		std::cout << element << '\n';
 	}
 
+	return arr;
 }
