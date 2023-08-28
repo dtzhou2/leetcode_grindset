@@ -369,6 +369,130 @@ int main()
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
 
+    // New Keyword requests space from the heap, a.k.a main memory
+   // New keyword returns an ADDRESS, not an actual variable
+    new int;
+    // Often we assign the result of this to a ptr, so we can use it later
+    auto* ptr{ new int }; // 
+    // We can then dereference that pointer to access the memory
+    *ptr = 7;
+    // When we use the new keyword we can also intialize the variable using traditional means
+    auto* ptr2{ new int {6 } };
+
+    // The delete keyword releases this memory back into the heap
+    delete ptr;
+
+    // MAKE SURE TO NULLPTR the leftover ptr. If you dont UNDEFINED BEHAVIOR WILL HAPPEN
+    ptr = nullptr;
+
+    // DONT DO THIS
+    auto* ptr3{ ptr2 };
+    // If you do the above and delete/free ptr2 ptr3 will also be dangling
+    delete ptr2;
+
+    // MAKE SURE that you nullify ALL dangling pointers
+    ptr2 = nullptr;
+    ptr3 = nullptr;
+
+    // nullptrs are useful since they allow us to conditionally allocate memory
+    if (!ptr)
+        ptr = new int;
+    // You can also safely delete nullptrs, so you can delete without conditional statements
+    delete ptr;
+
+    // WAYS YOU CAN lEaK MEMORY
+    // Method 1: Letting the pointer go out of scape without freeing the address
+    {
+        auto* ptr5{ new int { 6 } };
+        // Fixed by deleting the pointer before it goes out of scope
+        delete ptr5;
+    }
+
+    // Method 2: Changing the pointer without freeing it
+    auto* ptr5{ new int { 6 } };
+    // Fixed by deleting the pointer beforehand
+    delete ptr5;
+    auto val{ 69 };
+    ptr5 = &val;
+
+    // Method 3: Double allocating the pointer
+    auto* ptr6{ new int { 6 } };
+    //Fixed by deleting the pointer beforehand
+    delete ptr6;
+    ptr6 = { new int {7 } };
+
+    std::cout << "Enter a postitive integer: ";
+    std::size_t length{};
+    std::cin >> length;
+
+    // Create a dynamic array by modifying the new call with one for arrays
+    auto* array{ new int[length] {} };
+    // Since dynamic arrays pull from heap they can be much larger than fixed arrays
+    // EG Array below will cause seg fault since not enough memory in stack
+    // int array_fixed[10000000000]{};
+    // C++ 11 and up allows you to use intializer lists to allocate dynamic arrays
+    auto* array5{ new int[5] { 0, 1, 2, 3, 4} };
+
+    array[0] = 5;
+    // The delete[] keyword NOT delete deallocates arrays
+    delete[] array;
+    array = nullptr;
+
+    std::cout << "How many names would you like to enter: ";
+    std::size_t name_len;
+    std::cin >> name_len;
+
+    auto* array2{ new std::string[name_len]{} };
+    for (int i{}; i < name_len; ++i) {
+        std::cout << "Enter name " << i + 1 << " : ";
+        std::getline(std::cin >> std::ws, array2[i]);
+    }
+
+    constexpr int fibonacci[]{ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 };
+    // For each loop will access each array element
+    // For each iteration, number is set to the value of the array element for the current loop iteration
+    // For each loop is ideal situation to use auto const
+    for (auto number : fibonacci) {
+        std::cout << number << ' ';
+    }
+
+    std::cout << '\n';
+
+    std::string array7[]{ "peter", "likes", "frozen", "yogurt" };
+    // If you do this, it will copy each element in array7 into the elemtn variable
+    // This is expensive and will eat up memory space
+    for (auto element : array7)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << '\n';
+
+    // Instead of doing this the expensive way, we can simply for each loop using a reference
+    // This means that each element variables only copys the address of the array variable
+    // This also allows you to change the array by dereferencing element 
+    for (auto& element : array7)
+    {
+        std::cout << element << ' ';
+    }
+
+    std::cout << '\n';
+
+    // If you want to avoid accidentely modifying the array make your for each loop const
+    for (const auto& element : array7)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << '\n';
+
+    constexpr int scores[]{ 84, 92, 76, 81, 56 };
+
+
+    // The intial I used here is to set an iterator which keeps tack of our indices (C++ 20 ONLY)
+    for (int i{ 0 }; auto score : scores)
+    {
+
+    }
+
     return 0;
     // Your main function should always return 0 if it ran normally
 
