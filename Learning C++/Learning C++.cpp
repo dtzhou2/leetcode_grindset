@@ -437,6 +437,27 @@ int main()
 
     }
 
+    // This is a variable with value 5
+    int var{ 5 };
+    // This is a pointer with value = address of var
+    int* ptr1{ &var };
+    // This is a double pointer, with value = address of pointer which has value = address of var
+    int** dbl_ptr{ &ptr1 };
+    // Note that it is illegal to set a double pointer to a value directly
+    //int** dbl_ptr_1{ 5 };
+
+    // Showing that in order to dereference a double pointer you need to apply the dereference operator twice
+    std::cout << *dbl_ptr << " This will print the address of the first pointer" << '\n';
+    std::cout << **dbl_ptr << " This will print the actual value of the variable" << '\n';
+
+    // This will create a pointer to an array of pointers
+    int** ptr_array{ new int* [10] };
+    // For each of the integer pointers in our array of pointer allocate a new dynamic array
+    // This allows us to build/allocate dynamic 2d arrays, which we typically cant do
+    for (int count{ 0 }; count < 10; ++count) {
+        ptr_array[count] = new int[5];
+    }
+
     return 0;
     // Your main function should always return 0 if it ran normally
 
