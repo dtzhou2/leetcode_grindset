@@ -316,7 +316,7 @@ int main()
     std::cout << "User #5: " << (passOrFail() ? "Pass\n" : "Fail\n");
 
     int x{ 3 };
-    
+
     switch (x)
     {
     case 1:
@@ -334,15 +334,15 @@ int main()
     }
 
     // Here is how to use the enumerated type 
-    Color apple { red };
-    Color shirt { green };
+    [[maybe_unused]] Color apple{ red };
+    [[maybe_unused]] Color shirt{ green };
     // This errors because white was not defined in the enumerated type
     // Color paper { white }; 
 
     Monster::MonsterType monster { Monster::troll };
     Monster::MonsterType monster1 { Monster::orc };
 
-    if(monster == monster1)
+    if (monster == monster1)
         std::cout << "A troll is the same as an orc \n";
     else
         std::cout << "A troll is not the same as an orc \n";
@@ -353,21 +353,42 @@ int main()
     // Monster::MonsterType monster3 {2};
 
     // One way we can get around this is to do an explicit conversion using a static cast
-    int input{};
-    std::cin >> input;
-    Color paint1 = static_cast <Color>(input);
+    //int input{};
+    //std::cin >> input;
+    //[[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    Color paint2 {2};
+    [[maybe_unused]] Color paint2{ 2 };
 
     // The using enum keyword will import the entire enumeration into the current scope
     // using enum Fruits;
 
-    Animal dora { Animal::goat };
-    Animal sarah { Animal::pig };
+    [[maybe_unused]] Animal dora{ Animal::goat };
+    [[maybe_unused]] Animal sarah{ Animal::pig };
 
     printNumberOfLegs(dora);
-    std::cout << getAnimalName(sarah);
+    std::cout << getAnimalName(sarah) << '\n';
+
+    // This is a variable with value 5
+    int var{ 5 };
+    // This is a pointer with value = address of var
+    int* ptr1{ &var };
+    // This is a double pointer, with value = address of pointer which has value = address of var
+    int** dbl_ptr{ &ptr1 };
+    // Note that it is illegal to set a double pointer to a value directly
+    //int** dbl_ptr_1{ 5 };
+
+    // Showing that in order to dereference a double pointer you need to apply the dereference operator twice
+    std::cout << *dbl_ptr << " This will print the address of the first pointer" << '\n';
+    std::cout << **dbl_ptr << " This will print the actual value of the variable" << '\n';
+
+    // This will create a pointer to an array of pointers
+    int** ptr_array{ new int* [10] }; 
+    // For each of the integer pointers in our array of pointer allocate a new dynamic array
+    // This allows us to build/allocate dynamic 2d arrays, which we typically cant do
+    for (int count{ 0 }; count < 10; ++count) {
+        ptr_array[count] = new int[5]; 
+    }
 
     return 0;
     // Your main function should always return 0 if it ran normally
