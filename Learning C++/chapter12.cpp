@@ -1,4 +1,6 @@
 #include <iostream>
+#include "chapter12.h"
+#include "add.h"
 
 int funfun()
 {
@@ -16,14 +18,14 @@ using ComparisonFunction = bool (*)(int, int);
 // Here we can use function pointers to pass in a function to the function, allowing us to
 // modify the behavior of the sort. We can sort by descending or by some weird sort, just by
 // changing the comparison algorithm which is passed in through the function pointer
-void SelectionSort(int* array, int size, ComparisonFunction = ascending )
+void SelectionSort(int* array, int size, ComparisonFunction compare = ascending )
 {
 	for (int startIndex{ 0 }; startIndex < (size - 1); ++startIndex) {
 		int bestIndex{ startIndex };
 		
 		for (int currentIndex{ startIndex + 1 }; currentIndex < size; ++currentIndex)
 		{
-			if (ComparisonFunction(array[bestIndex], array[currentIndex]))
+			if (compare (array[bestIndex], array[currentIndex]))
 			{
 				bestIndex = currentIndex;
 			}
@@ -34,8 +36,6 @@ void SelectionSort(int* array, int size, ComparisonFunction = ascending )
 bool ascending(int first_num, int second_num) {
 	return first_num > second_num;
 }
-
-using ArithmeticFunction = int (*)(int, int);
 
 void basic_calculator() {
 	int num1{};
@@ -51,8 +51,6 @@ void basic_calculator() {
 	std::cout << " Please input the operation";
 	std::cin >> op;
 	
-	char op{};
-
 	do
 	{
 		std::cout << "Enter an operation ('+', '-', '*', '/'): ";
@@ -79,10 +77,6 @@ ArithmeticFunction getArithmeticFunction(char op) {
 	default:
 		return nullptr;
 	}
-}
-
-int add(int a, int b) {
-	return a + b;
 }
 
 int subtract(int a, int b) {

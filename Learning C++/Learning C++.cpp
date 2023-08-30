@@ -370,7 +370,7 @@ int main()
     [[maybe_unused]] Animal sarah { Animal::pig };
 
     printNumberOfLegs(dora);
-    std::cout << getAnimalName(sarah);
+    std::cout << getAnimalName(sarah) << '\n';
 
     // Horrifically ugly syntax but this is how you declare a function pointer to an int function with no
     // parameters
@@ -385,7 +385,7 @@ int main()
     /*fcnPtr = notfunfun();*/
 
     // When you dynamically allocate a new variable, this memory get added to the heap
-    int* ptr{ new int };
+    [[maybe_unused]] int* ptr{ new int };
     // Even though these two variables are sequentially allocated, they might not have 
     // sequential addresses
     // Disadvantages of heap
@@ -395,7 +395,7 @@ int main()
     // access to a variable
     // Advantage of heap
     // 1. Heap has a ton of memory and is used for large arrays, structures + classes
-    int* ptr2{ new int };
+    [[maybe_unused]] int* ptr2{ new int };
     // Call stack keeps track of all the active functions from start to current point of 
     // execution
 
@@ -404,10 +404,32 @@ int main()
     std::function<bool(int, int)> sample_comparison_funcction;
 
     // The auto keyword can also be used to infer the function pointer type
-    auto sort_function{ SelectionSort };
+    [[maybe_unused]] auto sort_function{ SelectionSort };
 
-    basic_calculator();
+    //basic_calculator();
+    
+    // The size of a vector = amount of elements in the vector
+    // The capacity of a vector = amount of memory allocated to the vector
+    // THe 'length' of the array is based on the size, as indicated here
+    std::vector array{ 0,1,2 };
+    std::cout << "The length of the array is " << array.size() << '\n';
+    std::cout << "The capacity of the array is " << array.capacity() << '\n';
 
+    // Resizing the array changes both its size and capacity
+    array.resize(5);
+
+    std::cout << "The length of the array is " << array.size() << '\n';
+    std::cout << "The capacity of the array is " << array.capacity() << '\n';
+
+    // You can see that when we decrease the number of elements in the vector, the capacity remains unchanged
+    // However, the length/size of the array changes
+    array = { 1, 2, 3 };
+    std::cout << "The length of the array is " << array.size() << '\n';
+    std::cout << "The capacity of the array is " << array.capacity() << '\n';
+
+    // Array subscripts and at are based on the length but not the capacity of the vector
+    // We can set the vector to a specific amount of capacity by using the reserve function 
+    array.reserve(10);
 
     return 0;
     // Your main function should always return 0 if it ran normally
