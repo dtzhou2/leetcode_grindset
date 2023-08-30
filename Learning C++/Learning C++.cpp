@@ -17,6 +17,7 @@
 #include "constants.h"
 #include "passfail.h"
 #include "chapter_10.h"
+#include "chapter12.h"
 #include "enums.h"
 
 //using namespace std;
@@ -334,8 +335,8 @@ int main()
     }
 
     // Here is how to use the enumerated type 
-    Color apple { red };
-    Color shirt { green };
+    [[maybe_unused]] Color apple { red };
+    [[maybe_unused]] Color shirt { green };
     // This errors because white was not defined in the enumerated type
     // Color paper { white }; 
 
@@ -355,19 +356,33 @@ int main()
     // One way we can get around this is to do an explicit conversion using a static cast
     int input{};
     std::cin >> input;
-    Color paint1 = static_cast <Color>(input);
+    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    Color paint2 {2};
+    [[maybe_unused]] Color paint2 {2};
 
     // The using enum keyword will import the entire enumeration into the current scope
     // using enum Fruits;
 
-    Animal dora { Animal::goat };
-    Animal sarah { Animal::pig };
+    [[maybe_unused]] Animal dora { Animal::goat };
+    [[maybe_unused]] Animal sarah { Animal::pig };
 
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
+
+    // Horrifically ugly syntax but this is how you declare a function pointer to an int function with no
+    // parameters
+    // This will assign the 
+    int (*fcnPtr)() { &funfun };
+    // This is hwo you would do the same, but with a constant function pointer
+    //int (*const fcnPtr2)();
+    // Heres how you would assign that function pointer to another function
+    fcnPtr = notfunfun;
+    // DO NOT DO THIS because you are now assigning the function pointer to a function's return value
+    // which is NOT a pointer
+    /*fcnPtr = notfunfun();*/
+    
+
 
     return 0;
     // Your main function should always return 0 if it ran normally
