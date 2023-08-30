@@ -390,6 +390,62 @@ int main()
         ptr_array[count] = new int[5]; 
     }
 
+    // New Keyword requests space from the heap, a.k.a main memory
+   // New keyword returns an ADDRESS, not an actual variable
+    new int;
+    // Often we assign the result of this to a ptr, so we can use it later
+    auto* ptr{ new int }; // 
+    // We can then dereference that pointer to access the memory
+    *ptr = 7;
+    // When we use the new keyword we can also intialize the variable using traditional means
+    auto* ptr2{ new int {6 } };
+
+    // The delete keyword releases this memory back into the heap
+    delete ptr;
+
+    // MAKE SURE TO NULLPTR the leftover ptr. If you dont UNDEFINED BEHAVIOR WILL HAPPEN
+    ptr = nullptr;
+
+    // DONT DO THIS
+    auto* ptr3{ ptr2 };
+    // If you do the above and delete/free ptr2 ptr3 will also be dangling
+    delete ptr2;
+
+    // MAKE SURE that you nullify ALL dangling pointers
+    ptr2 = nullptr;
+    ptr3 = nullptr;
+
+    // nullptrs are useful since they allow us to conditionally allocate memory
+    if (!ptr)
+        ptr = new int;
+    // You can also safely delete nullptrs, so you can delete without conditional statements
+    delete ptr;
+
+    // WAYS YOU CAN lEaK MEMORY
+    // Method 1: Letting the pointer go out of scape without freeing the address
+    {
+        auto* ptr5{ new int { 6 } };
+        // Fixed by deleting the pointer before it goes out of scope
+        delete ptr5;
+    }
+
+    // Method 2: Changing the pointer without freeing it
+    auto* ptr5{ new int { 6 } };
+    // Fixed by deleting the pointer beforehand
+    delete ptr5;
+    auto val{ 69 };
+    ptr5 = &val;
+
+    // Method 3: Double allocating the pointer
+    auto* ptr6{ new int { 6 } };
+    //Fixed by deleting the pointer beforehand
+    delete ptr6;
+    ptr6 = { new int {7 } };
+
+    std::cout << "Enter a postitive integer: ";
+    std::size_t length{};
+    std::cin >> length;
+
     return 0;
     // Your main function should always return 0 if it ran normally
 
