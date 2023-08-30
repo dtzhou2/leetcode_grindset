@@ -1,3 +1,5 @@
+#include <iostream>
+
 int funfun()
 {
 	return 5;
@@ -21,7 +23,7 @@ void SelectionSort(int* array, int size, ComparisonFunction = ascending )
 		
 		for (int currentIndex{ startIndex + 1 }; currentIndex < size; ++currentIndex)
 		{
-			if (comparisonFcn(array[bestIndex], array[currentIndex]))
+			if (ComparisonFunction(array[bestIndex], array[currentIndex]))
 			{
 				bestIndex = currentIndex;
 			}
@@ -31,4 +33,66 @@ void SelectionSort(int* array, int size, ComparisonFunction = ascending )
 
 bool ascending(int first_num, int second_num) {
 	return first_num > second_num;
+}
+
+using ArithmeticFunction = int (*)(int, int);
+
+void basic_calculator() {
+	int num1{};
+	int num2{};
+	char op{};
+
+	std::cout << " Please input one integer";
+	std::cin >> num1;
+	std::cout << '\n';
+	std::cout << "Please input the other integer";
+	std::cin >> num2;
+	std::cout << '\n';
+	std::cout << " Please input the operation";
+	std::cin >> op;
+	
+	char op{};
+
+	do
+	{
+		std::cout << "Enter an operation ('+', '-', '*', '/'): ";
+		std::cin >> op;
+	} while (op != '+' && op != '-' && op != '*' && op != '/');
+
+	ArithmeticFunction correct_operation = getArithmeticFunction(op);
+	if (correct_operation != nullptr)
+		correct_operation(num1, num2);
+
+}
+
+ArithmeticFunction getArithmeticFunction(char op) {
+	switch (op)
+	{
+	case '+':
+		return &add;
+	case '-':
+		return &subtract;
+	case '*':
+		return &multiply;
+	case '/':
+		return &divide;
+	default:
+		return nullptr;
+	}
+}
+
+int add(int a, int b) {
+	return a + b;
+}
+
+int subtract(int a, int b) {
+	return a - b;
+}
+
+int multiply(int a, int b) {
+	return a * b;
+}
+
+int divide(int a, int b) {
+	return a / b;
 }

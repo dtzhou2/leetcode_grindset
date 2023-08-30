@@ -406,6 +406,8 @@ int main()
     // The auto keyword can also be used to infer the function pointer type
     auto sort_function{ SelectionSort };
 
+    basic_calculator();
+
 
     return 0;
     // Your main function should always return 0 if it ran normally
