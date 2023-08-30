@@ -355,19 +355,35 @@ int main()
     // One way we can get around this is to do an explicit conversion using a static cast
     int input{};
     std::cin >> input;
-    Color paint1 = static_cast <Color>(input);
+    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    Color paint2 {2};
+    [[maybe_unused]] Color paint2 {2};
 
     // The using enum keyword will import the entire enumeration into the current scope
     // using enum Fruits;
 
-    Animal dora { Animal::goat };
-    Animal sarah { Animal::pig };
+    [[maybe_unused]] Animal dora { Animal::goat };
+    [[maybe_unused]] Animal sarah { Animal::pig };
 
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
+
+    // When you dynamically allocate a new variable, this memory get added to the heap
+    int* ptr{ new int };
+    // Even though these two variables are sequentially allocated, they might not have 
+    // sequential addresses
+    // Disadvantages of heap
+    // 1. Allocating memory on the heap is comparatively slow
+    // 2. Memory stays allocated until it is deleted (memory leaks)
+    // 3. You must access the memory through a pointer, which is slower than direct 
+    // access to a variable
+    // Advantage of heap
+    // 1. Heap has a ton of memory and is used for large arrays, structures + classes
+    int* ptr2{ new int };
+    // Call stack keeps track of all the active functions from start to current point of 
+    // execution
+
 
     return 0;
     // Your main function should always return 0 if it ran normally
