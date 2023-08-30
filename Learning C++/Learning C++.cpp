@@ -370,6 +370,22 @@ int main()
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
 
+    // When you dynamically allocate a new variable, this memory get added to the heap
+    int* ptr{ new int };
+    // Even though these two variables are sequentially allocated, they might not have 
+    // sequential addresses
+    // Disadvantages of heap
+    // 1. Allocating memory on the heap is comparatively slow
+    // 2. Memory stays allocated until it is deleted (memory leaks)
+    // 3. You must access the memory through a pointer, which is slower than direct 
+    // access to a variable
+    // Advantage of heap
+    // 1. Heap has a ton of memory and is used for large arrays, structures + classes
+    int* ptr2{ new int };
+    // Call stack keeps track of all the active functions from start to current point of 
+    // execution
+
+
     // Horrifically ugly syntax but this is how you declare a function pointer to an int function with no
     // parameters
     // This will assign the 
