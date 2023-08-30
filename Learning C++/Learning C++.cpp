@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <functional>
 // This causes the pre-processor to include the entire contents of the iostream pre-processed file 
 // Angled brackets in this case signifies to the pre-processor that the header file was not written by us
 // Causing it to first pull from the system include directories
@@ -370,6 +372,18 @@ int main()
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
 
+    // Horrifically ugly syntax but this is how you declare a function pointer to an int function with no
+    // parameters
+    // This will assign the 
+    int (*fcnPtr)() { &funfun };
+    // This is hwo you would do the same, but with a constant function pointer
+    //int (*const fcnPtr2)();
+    // Heres how you would assign that function pointer to another function
+    fcnPtr = notfunfun;
+    // DO NOT DO THIS because you are now assigning the function pointer to a function's return value
+    // which is NOT a pointer
+    /*fcnPtr = notfunfun();*/
+
     // When you dynamically allocate a new variable, this memory get added to the heap
     int* ptr{ new int };
     // Even though these two variables are sequentially allocated, they might not have 
@@ -385,19 +399,12 @@ int main()
     // Call stack keeps track of all the active functions from start to current point of 
     // execution
 
+    // The std::function makes creating function pointer slightly easier
+    // The syntax is <return_type(param_type1,param_type2,param_type3....)> function_name
+    std::function<bool(int, int)> sample_comparison_funcction;
 
-    // Horrifically ugly syntax but this is how you declare a function pointer to an int function with no
-    // parameters
-    // This will assign the 
-    int (*fcnPtr)() { &funfun };
-    // This is hwo you would do the same, but with a constant function pointer
-    //int (*const fcnPtr2)();
-    // Heres how you would assign that function pointer to another function
-    fcnPtr = notfunfun;
-    // DO NOT DO THIS because you are now assigning the function pointer to a function's return value
-    // which is NOT a pointer
-    /*fcnPtr = notfunfun();*/
-    
+    // The auto keyword can also be used to infer the function pointer type
+    auto sort_function{ SelectionSort };
 
 
     return 0;
