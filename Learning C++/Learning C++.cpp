@@ -5,6 +5,7 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <algorithm>
 // This causes the pre-processor to include the entire contents of the iostream pre-processed file 
 // Angled brackets in this case signifies to the pre-processor that the header file was not written by us
 // Causing it to first pull from the system include directories
@@ -168,7 +169,7 @@ int main()
     //writeAnswer(x+y);
     //// Basic Example of using header files and multi file programs
 
-    //std::cout << static_cast<int>(5.5);
+    //std::cout <<    <int>(5.5);
     //// Static cast is how we can explicity tell the program to convert between different fundamental types
 
     //const double gravity{ 9.8 };
@@ -356,9 +357,9 @@ int main()
     // Monster::MonsterType monster3 {2};
 
     // One way we can get around this is to do an explicit conversion using a static cast
-    int input{};
-    std::cin >> input;
-    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
+    //int input{};
+    //std::cin >> input;
+    //[[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
     [[maybe_unused]]Color paint2{ 2 };
@@ -495,8 +496,36 @@ int main()
     
     // Here we intialize a vector using parenthesis intialization, by just specifying the number of elements
     // This is cheaper than resizing and is preferred if you want to 0 intialize
-    std::vector<int> v2(3);
+    std::vector<int> v2{ 5, 8, 12, 24 };
     
+    // This operator will return the starting pointer for the array
+    auto it{ v2.begin() };
+    // This operator will erase the value it currently points at and then increment it
+    v2.erase(it);
+    // This operator will return the ending pointer for the array
+    it = v2.end();
+
+    auto param = 30;
+    // std::find will try to find the matching element in the data container
+    // First argument is starting point iterator
+    // Second argument is ending point iterator
+    // Third argument is what value it should search for 
+    // It will return the index of the element if it finds it, otherwise it will return end of array iterator
+    auto result{ std::find(v2.begin(), v2.end(), param) };
+    if (result != v2.end())
+        std::cout << *result << '\n';
+    // std::find_if will do the exact same thing as std::find, but instead of passing in a search param
+    // you pass in a search function that will either return true or false
+    // if it returns true then find_if will return the index that the search fn returned true
+    // else it will return the end pointer
+    result = std::find_if(v2.begin(), v2.end(), is_prime);
+    if (result != v2.end())
+        std::cout << *result << '\n';
+
+    // Count if has the same arguments as find_if, but will return the number of matches instead of the index
+    // of the first match
+    auto result2{ std::count_if(v2.begin(), v2.end(), is_prime) };
+    std::cout << result2 << '\n';
 
     return 0;
     // Your main function should always return 0 if it ran normally

@@ -34,5 +34,15 @@ std::vector<T> vector_test(std::vector<T> arr) {
 		std::cout << element << '\n';
 	}
 
+	// Returning a vector by value is ok b ecause C++ can do trickery to make it efficient
 	return arr;
+}
+
+bool is_prime(int input) {
+	for (int i{ 2 }; i < input/2; i++)
+		if (input % i == 0)
+			return false;
+	
+	return true;
+
 }
