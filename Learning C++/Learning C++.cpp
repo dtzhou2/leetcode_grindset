@@ -49,7 +49,9 @@ enum Color: int // By putting an int base here we specify a base, which represen
     blue, // Integral value 2
 };
 
-int main()
+// argc is the number of cmd-line arguments passed to ur function (starts @ 1)
+// argv is the actual content  of the arguments
+int main(int argc, char argv[])
 {
     //// C++ Has many different ways to intialize variables
     //[[maybe_unused]] int a; 
@@ -319,7 +321,7 @@ int main()
     std::cout << "User #5: " << (passOrFail() ? "Pass\n" : "Fail\n");
 
     int x{ 3 };
-    
+
     switch (x)
     {
     case 1:
@@ -337,15 +339,15 @@ int main()
     }
 
     // Here is how to use the enumerated type 
-    [[maybe_unused]] Color apple { red };
-    [[maybe_unused]] Color shirt { green };
+    [[maybe_unused]] Color apple{ red };
+    [[maybe_unused]] Color shirt{ green };
     // This errors because white was not defined in the enumerated type
     // Color paper { white }; 
 
     Monster::MonsterType monster { Monster::troll };
     Monster::MonsterType monster1 { Monster::orc };
 
-    if(monster == monster1)
+    if (monster == monster1)
         std::cout << "A troll is the same as an orc \n";
     else
         std::cout << "A troll is not the same as an orc \n";
@@ -361,13 +363,13 @@ int main()
     [[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    [[maybe_unused]] Color paint2 {2};
+    [[maybe_unused]] Color paint2{ 2 };
 
     // The using enum keyword will import the entire enumeration into the current scope
     // using enum Fruits;
 
-    [[maybe_unused]] Animal dora { Animal::goat };
-    [[maybe_unused]] Animal sarah { Animal::pig };
+    [[maybe_unused]] Animal dora{ Animal::goat };
+    [[maybe_unused]] Animal sarah{ Animal::pig };
 
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah) << '\n';
@@ -407,11 +409,11 @@ int main()
     [[maybe_unused]] auto sort_function{ SelectionSort };
 
     //basic_calculator();
-    
+
     // The size of a vector = amount of elements in the vector
     // The capacity of a vector = amount of memory allocated to the vector
     // THe 'length' of the array is based on the size, as indicated here
-    std::vector array{ 0,1,2 };
+    std::vector array{ 0, 1, 2 };
     std::cout << "The length of the array is " << array.size() << '\n';
     std::cout << "The capacity of the array is " << array.capacity() << '\n';
 
@@ -430,6 +432,21 @@ int main()
     // Array subscripts and at are based on the length but not the capacity of the vector
     // We can set the vector to a specific amount of capacity by using the reserve function 
     array.reserve(10);
+
+    // Below is an example of the lambda function
+    // [] represents the capture clause
+    // () represents the arguments
+    // characters after () are return type unless they are blank in which case
+    // return type set to auto
+    // You can store a lambda in a function pointer so it becomes a callable
+    // function. Use the auto keyword as then safest way to do this
+    auto storable_lambda {
+        [](std::string_view str) // here's our lambda, no capture clause
+        {
+    
+            return (str.find("nut") != std::string_view::npos);
+        }
+    };
 
     return 0;
     // Your main function should always return 0 if it ran normally

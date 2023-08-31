@@ -2,12 +2,12 @@
 #include "chapter12.h"
 #include "add.h"
 
-int funfun()
+auto funfun()
 {
 	return 5;
 }
 
-int notfunfun()
+auto notfunfun()
 {
 	return 7;
 }
@@ -18,7 +18,7 @@ using ComparisonFunction = bool (*)(int, int);
 // Here we can use function pointers to pass in a function to the function, allowing us to
 // modify the behavior of the sort. We can sort by descending or by some weird sort, just by
 // changing the comparison algorithm which is passed in through the function pointer
-void SelectionSort(int* array, int size, ComparisonFunction compare = ascending )
+auto SelectionSort(int* array, int size, ComparisonFunction compare = ascending )
 {
 	for (int startIndex{ 0 }; startIndex < (size - 1); ++startIndex) {
 		int bestIndex{ startIndex };
@@ -33,11 +33,11 @@ void SelectionSort(int* array, int size, ComparisonFunction compare = ascending 
 	}
 }
 
-bool ascending(int first_num, int second_num) {
+auto ascending(int first_num, int second_num) {
 	return first_num > second_num;
 }
 
-void basic_calculator() {
+auto basic_calculator() {
 	int num1{};
 	int num2{};
 	char op{};
@@ -63,7 +63,7 @@ void basic_calculator() {
 
 }
 
-ArithmeticFunction getArithmeticFunction(char op) {
+auto getArithmeticFunction(char op) {
 	switch (op)
 	{
 	case '+':
@@ -79,14 +79,14 @@ ArithmeticFunction getArithmeticFunction(char op) {
 	}
 }
 
-int subtract(int a, int b) {
+auto subtract(int a, int b) {
 	return a - b;
 }
 
-int multiply(int a, int b) {
+auto multiply(int a, int b) {
 	return a * b;
 }
 
-int divide(int a, int b) {
+auto divide(int a, int b) {
 	return a / b;
 }
