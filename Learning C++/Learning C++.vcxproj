@@ -131,7 +131,6 @@
   <ItemGroup>
     <ClCompile Include="Add.cpp" />
     <ClCompile Include="chapter_13.cpp" />
-    <ClCompile Include="chpater_13.h" />
     <ClCompile Include="double.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="height.cpp" />
@@ -141,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add.h" />
+    <ClInclude Include="chapter_13.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="double.h" />
     <ClInclude Include="globals.h" />

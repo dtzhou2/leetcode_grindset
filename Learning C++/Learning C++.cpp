@@ -350,13 +350,13 @@ int main()
     }
 
     // Here is how to use the enumerated type 
-    Color apple { red };
-    Color shirt { green };
+    [[maybe_unused]] Color apple { red };
+    [[maybe_unused]] Color shirt { green };
     // This errors because white was not defined in the enumerated type
     // Color paper { white }; 
 
-    Monster::MonsterType monster { Monster::troll };
-    Monster::MonsterType monster1 { Monster::orc };
+    [[maybe_unused]] Monster::MonsterType monster { Monster::troll };
+    [[maybe_unused]] Monster::MonsterType monster1 { Monster::orc };
 
     if(monster == monster1)
         std::cout << "A troll is the same as an orc \n";
@@ -371,16 +371,16 @@ int main()
     // One way we can get around this is to do an explicit conversion using a static cast
     int input{};
     std::cin >> input;
-    Color paint1 = static_cast <Color>(input);
+    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
     // We can also get around this because in 
     // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    Color paint2 {2};
+    [[maybe_unused]] Color paint2 {2};
 
     // The using enum keyword will import the entire enumeration into the current scope
     // using enum Fruits;
 
-    Animal dora { Animal::goat };
-    Animal sarah { Animal::pig };
+    [[maybe_unused]] Animal dora { Animal::goat };
+    [[maybe_unused]] Animal sarah { Animal::pig };
 
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
@@ -441,7 +441,7 @@ void printNumberOfLegs(Animal animal){
             return;
         }
         case Animal::duck: 
-        {`
+        {
             std::cout << "2";
             return;
         }
