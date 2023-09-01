@@ -18,6 +18,7 @@
 #include "passfail.h"
 #include "chapter_10.h"
 #include "enums.h"
+#include "chapter_13.h"
 
 //using namespace std;
 // This is a VERY VERY discouraged practice
@@ -45,6 +46,21 @@ enum Color: int // By putting an int base here we specify a base, which represen
     green, // Integral value 1
     blue, // Integral value 2
 };
+
+class Employee
+{
+public:
+    int id;
+    int dob;
+    int wage;
+
+    void print()
+    {
+        std::cout << "The employee id is " << id << " The dob is " << dob << " The wage is " << wage;
+    }
+
+};
+
 
 int main()
 {
@@ -369,6 +385,8 @@ int main()
     printNumberOfLegs(dora);
     std::cout << getAnimalName(sarah);
 
+    Employee* new_employee = new Employee();
+
     return 0;
     // Your main function should always return 0 if it ran normally
 
@@ -423,7 +441,7 @@ void printNumberOfLegs(Animal animal){
             return;
         }
         case Animal::duck: 
-        {
+        {`
             std::cout << "2";
             return;
         }
