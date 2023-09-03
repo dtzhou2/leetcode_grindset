@@ -16,7 +16,6 @@
 #include "globals2.h"
 #include "constants.h"
 #include "passfail.h"
-#include "chapter_10.h"
 #include "enums.h"
 #include "chapter_13.h"
 
@@ -47,19 +46,7 @@ enum Color: int // By putting an int base here we specify a base, which represen
     blue, // Integral value 2
 };
 
-class Employee
-{
-public:
-    int id;
-    int dob;
-    int wage;
 
-    void print()
-    {
-        std::cout << "The employee id is " << id << " The dob is " << dob << " The wage is " << wage;
-    }
-
-};
 
 
 int main()
@@ -355,37 +342,47 @@ int main()
     // This errors because white was not defined in the enumerated type
     // Color paper { white }; 
 
-    [[maybe_unused]] Monster::MonsterType monster { Monster::troll };
-    [[maybe_unused]] Monster::MonsterType monster1 { Monster::orc };
+    // Creating a class through value or default initialization will both call the default-constructor
+    // Favor value-initialization (with braces) over value-initialization (without braces)
+    Fraction frac{};
 
-    if(monster == monster1)
-        std::cout << "A troll is the same as an orc \n";
-    else
-        std::cout << "A troll is not the same as an orc \n";
-    which_monster(monster1);
+    std::cout << frac.getNumerator() << '\n';
 
-    // This will not work because C++ will not implicitly convert integers to unscoped enums
-    // HOWEVER, it will convert the other way implicitly
-    // Monster::MonsterType monster3 {2};
+    Calc calc{};
+    // By returning the this pointer with every operator we make it possible to chain functions together like so
+    calc.add(5).sub(3).mult(4);
+    // Without returning the this pointer we would have to break up the operations like so
+    Calc calc2{};
+    calc.add(10);
+    calc.sub(4);
+    calc.mult(6);
+    // Seperating it out makes the code longer and less clean so in this case returning the this pointer is useful
 
-    // One way we can get around this is to do an explicit conversion using a static cast
-    int input{};
-    std::cin >> input;
-    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
-    // We can also get around this because in 
-    // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    [[maybe_unused]] Color paint2 {2};
+    // How you would print a class without using anonymous objects
+    Cents cents{ 6 };
+    print(cents);
 
-    // The using enum keyword will import the entire enumeration into the current scope
-    // using enum Fruits;
+    // How you could print a class using anonymous objects (this is more efficient because the cents object is
+    // automatically destroyed)
+    print(Cents{ 6 });
+    // This is a more complex use of anonymous objects. You can see that it really saves you space and time
+    // when you dont need to save the variable for later tasks
+    std::cout << subtract(Cents{ 10 }.getCents(), Cents{ 4 }.getCents()) << '\n';
 
-    [[maybe_unused]] Animal dora { Animal::goat };
-    [[maybe_unused]] Animal sarah { Animal::pig };
+    Point2d first{};
+    Point2d second{ 3.0, 4.0 };
+    first.print();
+    second.print();
+    std::cout << "Distance between two points: " << distanceFrom(first, second) << '\n';
 
-    printNumberOfLegs(dora);
-    std::cout << getAnimalName(sarah);
+    // When you nest enums in classes, the class acts as the namespace for the enum
+    Fruit apple4{ Fruit::apple };
 
-    Employee* new_employee = new Employee();
+    Monster skeleton{ Monster::skeleton, "Bones", "*rattle*", 4 };
+    skeleton.print();
+
+    //Monster m{ MonsterGenerator::generate() };
+    //m.print();
 
     return 0;
     // Your main function should always return 0 if it ran normally
@@ -448,35 +445,6 @@ void printNumberOfLegs(Animal animal){
         default:
             std::cout << "Aint no way bruh";
             return;
-    }
-}
-
-
-// Super basic code for identifying then printing out a message based on which enum type something imonsters
-void which_monster(Monster::MonsterType monster){
-    switch(monster)
-    {
-        case Monster::troll: {
-            std::cout << "Its a troll! \n" ;
-            return;
-        }
-        case Monster::orc: {
-            std::cout << "Its a orc! \n" ;
-            return;
-        }
-        case Monster::ogre: {
-            std::cout << "Its a ogre! \n" ;
-            return;
-        }
-        case Monster::goblin: {
-            std::cout << "Its a goblin! \n" ;
-            return;
-        }
-        case Monster::skeleton: {
-            std::cout << "Its a skeleton! \n" ;
-            return;
-        }
-
     }
 }
 
