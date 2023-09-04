@@ -16,8 +16,6 @@
 #include "globals2.h"
 #include "constants.h"
 #include "passfail.h"
-#include "chapter_10.h"
-#include "enums.h"
 
 //using namespace std;
 // This is a VERY VERY discouraged practice
@@ -316,7 +314,7 @@ int main()
     std::cout << "User #5: " << (passOrFail() ? "Pass\n" : "Fail\n");
 
     int x{ 3 };
-    
+
     switch (x)
     {
     case 1:
@@ -333,133 +331,10 @@ int main()
         break;
     }
 
-    // Here is how to use the enumerated type 
-    [[maybe_unused]] Color apple { red };
-    [[maybe_unused]] Color shirt { green };
-    // This errors because white was not defined in the enumerated type
-    // Color paper { white }; 
-
-    Monster::MonsterType monster { Monster::troll };
-    Monster::MonsterType monster1 { Monster::orc };
-
-    if(monster == monster1)
-        std::cout << "A troll is the same as an orc \n";
-    else
-        std::cout << "A troll is not the same as an orc \n";
-    which_monster(monster1);
-
-    // This will not work because C++ will not implicitly convert integers to unscoped enums
-    // HOWEVER, it will convert the other way implicitly
-    // Monster::MonsterType monster3 {2};
-
-    // One way we can get around this is to do an explicit conversion using a static cast
-    int input{};
-    std::cin >> input;
-    [[maybe_unused]] Color paint1 = static_cast <Color>(input);
-    // We can also get around this because in 
-    // In C++ 17 and onwards, enums WITH a base type will allow this implicit conversion
-    [[maybe_unused]] Color paint2 {2};
-
-    // The using enum keyword will import the entire enumeration into the current scope
-    // using enum Fruits;
-
-    [[maybe_unused]] Animal dora { Animal::goat };
-    [[maybe_unused]] Animal sarah { Animal::pig };
-
-    printNumberOfLegs(dora);
-    std::cout << getAnimalName(sarah);
 
     return 0;
     // Your main function should always return 0 if it ran normally
 
-}
-
-constexpr std::string_view getAnimalName(Animal animal){
-    switch(animal)
-    {
-        case Animal::cat: 
-            return "cat \n";
-        case Animal::chicken: 
-            return "chicken";
-        case Animal::goat: 
-            return "goat";
-        case Animal::duck: 
-            return "duck";
-        case Animal::pig: 
-            return "pig";
-        case Animal::dog: 
-            return "dog";
-        default:
-            return "aint no way bruh";
-    }
-}
-
-void printNumberOfLegs(Animal animal){
-    switch(animal)
-    {
-        case Animal::pig: 
-        {
-            std::cout << "4";
-            return;
-        }
-        case Animal::chicken: 
-        {
-            std::cout << "2";
-            return;
-        }
-        case Animal::goat: 
-        {
-            std::cout << "4";
-            return;
-        }
-        case Animal::cat: 
-        {
-            std::cout << "4";
-            return;
-        }
-        case Animal::dog: 
-        {
-            std::cout << "4";
-            return;
-        }
-        case Animal::duck: 
-        {
-            std::cout << "2";
-            return;
-        }
-        default:
-            std::cout << "Aint no way bruh";
-            return;
-    }
-}
-
-
-// Super basic code for identifying then printing out a message based on which enum type something imonsters
-void which_monster(Monster::MonsterType monster){
-    switch(monster)
-    {
-        case Monster::troll: {
-            std::cout << "Its a troll! \n" ;
-            return;
-        }
-        case Monster::orc: {
-            std::cout << "Its a orc! \n" ;
-            return;
-        }
-        case Monster::ogre: {
-            std::cout << "Its a ogre! \n" ;
-            return;
-        }
-        case Monster::goblin: {
-            std::cout << "Its a goblin! \n" ;
-            return;
-        }
-        case Monster::skeleton: {
-            std::cout << "Its a skeleton! \n" ;
-            return;
-        }
-
-    }
 }
 
 int staticFunctionTest()
