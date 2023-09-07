@@ -131,7 +131,7 @@
   <ItemGroup>
     <ClCompile Include="Add.cpp" />
     <ClCompile Include="chapter_13.cpp" />
-    <ClCompile Include="chpater_13.h" />
+    <ClCompile Include="chapter_13.h" />
     <ClCompile Include="double.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="height.cpp" />
