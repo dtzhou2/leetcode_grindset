@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <functional>
 // This causes the pre-processor to include the entire contents of the iostream pre-processed file 
 // Angled brackets in this case signifies to the pre-processor that the header file was not written by us
 // Causing it to first pull from the system include directories
@@ -331,6 +332,12 @@ int main()
         break;
     }
 
+    std::string tom{ "Tom" };
+    std::string berta{ "Berta" };
+
+    // std::reference_wrapper allows you to create vectors / arrays of references which are usually not allowed
+    // it 'wraps' the references, and to get the original value use the get() member function
+    std::vector<std::reference_wrapper<std::string>> names{ tom, berta }; // these strings are stored by reference, not value
 
     return 0;
     // Your main function should always return 0 if it ran normally
@@ -342,7 +349,7 @@ int staticFunctionTest()
     int a{ 0 };
     static int b{ 0 };
 
-    ++a;
+    ++a; 
     ++b;
 
     std::cout << "The value of int a is " << a << "\n";
